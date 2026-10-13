@@ -7,9 +7,8 @@ procesos y servicios
 
 El código (`src/`) se encuentra organizado por:
 
-- **Protocolos Web:**
+- **Protocolos y entornos Web:**
   - Uso del objeto `InetAddress` y sus métodos .
   - Manipulación de objetos `URL` y `URLConnection`
-- **Entorno Web (PHP + XAMPP):**
-  - Pruebas y scripts de desarrollo web con `PHP`.
+  - Pruebas y scripts con `PHP`.
 - **Sockets TCP (Cliente-Servidor):**
