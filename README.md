@@ -1,11 +1,11 @@
-# Sistemas de Servicios y Procesos
+# Procesos y Servicios
 
 Este repositorio reúne programas y prácticas orientados a la programación de 
 procesos y servicios
 
 ## 📁 Contenido
 
-El código fuente (`src/`) se encuentra organizado por:
+El código (`src/`) se encuentra organizado por:
 
 - **Protocolos Web:**
   - Uso del objeto `InetAddress` y sus métodos .
