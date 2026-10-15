@@ -32,6 +32,7 @@ public class ServidorPerfectos {
                 } else {
                     String respuesta = servicio.esNumeroPerfecto(numeroRecibido);
                     flujoSalida.writeUTF(respuesta);
+                    flujoSalida.flush();
                 }
             }    
 

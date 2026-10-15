@@ -45,6 +45,7 @@ public class ClientePerfectos {
                 }
 
                 flujoSalida.writeInt(numero);
+                flujoSalida.flush();
 
                 if (numero == 0) {
                     sigue = false;
