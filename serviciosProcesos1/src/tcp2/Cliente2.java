@@ -40,7 +40,7 @@ public class Cliente2 {
                 if (mensaje.equals("quit")) {
                     sigue = false;
                 } else {
-                    System.out.println("Recibiendo del SERVIDOR: " + flujoEntrada.readUTF());
+                    System.out.println("Respuesta del SERVIDOR: " + flujoEntrada.readUTF());
                 }
             }
 

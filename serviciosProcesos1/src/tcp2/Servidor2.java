@@ -26,7 +26,7 @@ public class Servidor2 {
             boolean sigue = true;
             while (sigue) {
                 String mensajeCliente = flujoEntrada.readUTF();
-                System.out.println("\nRecibiendo del CLIENTE: " + mensajeCliente);
+                System.out.println("\nRespuesta del CLIENTE: " + mensajeCliente);
 
                 if (mensajeCliente.equals("quit")) {
                     sigue = false; 
@@ -47,7 +47,7 @@ public class Servidor2 {
             serverS.close();
             // Cerrar Scanner
             sc.close();
-            //System.out.println("Servidor cerrado.");
+            System.out.println("Servidor cerrado.");
             
         } catch (IOException e) {
             e.printStackTrace();
