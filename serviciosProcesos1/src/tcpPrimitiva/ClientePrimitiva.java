@@ -77,7 +77,7 @@ public class ClientePrimitiva {
                     flujoSalida.flush();
 
                     // Leer la respuesta del servidor
-                    System.out.println("\n--- RESPUESTA DEL SERVIDOR ---");
+                    System.out.println("\nRESPUESTA DEL SERVIDOR");
                     System.out.println(flujoEntrada.readUTF());
                 }
             }
