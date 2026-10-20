@@ -4,72 +4,55 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ClientePrimitiva {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        String host = "localhost";
+        int puerto = 6000;
 
         try {
-            String host = "localhost";
-            int port = 6000;
-
-            Socket cliente = new Socket(host, port); 
+            Socket cliente = new Socket(host, puerto);
+            Scanner sc = new Scanner(System.in);
 
             DataOutputStream flujoSalida = new DataOutputStream(cliente.getOutputStream());
             DataInputStream flujoEntrada = new DataInputStream(cliente.getInputStream());
+            System.out.println("Conectado al servidor de Primitiva.");
 
-            Scanner sc = new Scanner(System.in);
-            boolean sigue = true;
+            while (true) {
+                int[] numerosCliente = new int[6];
 
-            while (sigue) {
-                System.out.println("\nNUEVA APUESTA PRIMITIVA");
-                System.out.println("Introduce 6 números distintos entre 1 y 49:");
-
-                ArrayList<Integer> primitiva = new ArrayList<>();
-                boolean cancelar = false;
-
-                while (primitiva.size() < 6) {
-                    System.out.print("Número " + (primitiva.size() + 1) + ": ");
-                    try {
-                        int num = Integer.parseInt(sc.nextLine());
-
-                        if (num == 0) {
-                            cancelar = true;
-                            break;
-                        }
-
-                        if (num < 1 || num > 49) {
-                            System.out.println("El número debe estar entre 1 y 49.");
-                        } else if (primitiva.contains(num)) {
-                            System.out.println("No puedes repetir números en la misma apuesta.");
-                        } else {
-                            primitiva.add(num);
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Introduce un número entero válido.");
-                    }
+                System.out.println("Introduce los numeros de tu primitiva entre 1-49");
+                for (int i = 0; i < numerosCliente.length; i++) {
+                    numerosCliente[i] = ServicioClientePrimitiva.pedirEnteroPositivo(sc);
+                }
+                flujoSalida.writeInt(numerosCliente.length);
+                for (int num : numerosCliente) {
+                    flujoSalida.writeInt(num);
                 }
 
-                if (cancelar) {
-                    // Enviar un 0 inicial para notificar la salida al servidor
-                    flujoSalida.writeInt(0);
+                System.out.println("Por favor introduzca su numero reintegro entre 0-9:");
+                int reintegro = ServicioClientePrimitiva.pedirReintegro(sc);
+                flujoSalida.writeInt(reintegro);
 
-                    flujoSalida.flush();
-                    sigue = false;
-                } else {
-                    // Enviar un indicador de transmisión activa (1)
-                    flujoSalida.writeInt(1);
-                    
-                    for (int n : primitiva) {
-                        flujoSalida.writeInt(n);
-                    }
-                    flujoSalida.flush();
+                System.out.println("Por favor introduzca su numero complementario entre 1-49: ");
+                int complementario = ServicioClientePrimitiva.pedirEnteroPositivo(sc);
+                flujoSalida.writeInt(complementario);
 
-                    // Leer la respuesta del servidor
-                    System.out.println("\nRESPUESTA DEL SERVIDOR");
-                    System.out.println(flujoEntrada.readUTF());
+                String respuesta = flujoEntrada.readUTF();
+                System.out.println("Recibiendo un mensaje del servidor: " + respuesta);
+                
+                System.out.println("Si desea salir introduzca 0: ");
+                int decision =ServicioClientePrimitiva.pedirEnteroPositivo(sc);
+
+                flujoSalida.writeInt(decision);
+                flujoSalida.flush();
+                
+                if (decision==0) {
+                    System.out.println("Cerrando comunicacion");
+                    break;
                 }
+                flujoSalida.flush();
             }
 
             flujoEntrada.close();
@@ -78,7 +61,7 @@ public class ClientePrimitiva {
             sc.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error en el cliente: " + e.getMessage());
         }
     }
 }

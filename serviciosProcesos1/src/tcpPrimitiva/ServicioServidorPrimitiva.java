@@ -2,7 +2,7 @@ package tcpPrimitiva;
 
 import java.util.Arrays;
 
-public class ServicioServidorPrimitiva2 {
+public class ServicioServidorPrimitiva {
 
     private static int[] arrayServidor = new int[6];
     private static int complementarioServidor;

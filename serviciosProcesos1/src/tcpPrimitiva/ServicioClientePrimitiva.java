@@ -2,7 +2,7 @@ package tcpPrimitiva;
 
 import java.util.Scanner;
 
-public class ServicioClientePrimitiva2 {
+public class ServicioClientePrimitiva {
 
     public static int pedirEnteroPositivo(Scanner sc) {
         int numero;
@@ -12,10 +12,10 @@ public class ServicioClientePrimitiva2 {
                 sc.next();
             }
             numero = sc.nextInt();
-            if (numero < 1 || numero > 49) {
+            if ((numero < 1 || numero > 49) && numero != 0) {
                 System.out.println("Error: El número debe estar comprendido entre 1 y 49. Inténtalo de nuevo.");
             }
-        } while (numero < 1 || numero > 49);
+        } while ((numero < 1 || numero > 49) && numero != 0);
         return numero;
     }
 

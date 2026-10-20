@@ -5,55 +5,60 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class ServidorPrimitiva {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+
+        int puerto = 6000;
+
         try {
-            int port = 6000; // Puerto 
+            ServerSocket servidor = new ServerSocket(puerto);
+            System.out.println("Servidor escuchando en el puerto " + servidor.getLocalPort());
 
-            // Abrir ServerSocket
-            ServerSocket serverS = new ServerSocket(port);
-            System.out.println("Escuchando en " + serverS.getLocalPort());
+            Socket cliente1 = servidor.accept();
+            System.out.println("Cliente conectado: " + cliente1.getInetAddress());
 
-            Socket cliente = serverS.accept();
+            DataInputStream flujoEntrada = new DataInputStream(cliente1.getInputStream());
+            DataOutputStream flujoSalida = new DataOutputStream(cliente1.getOutputStream());
 
-            // Flujo de entrada y salida del servidor
-            DataInputStream flujoEntrada = new DataInputStream(cliente.getInputStream());
-            DataOutputStream flujoSalida = new DataOutputStream(cliente.getOutputStream());
-
-            // Bucle de respuestas
-            ServicioPrimitiva servicio = new ServicioPrimitiva();
-            boolean sigue = true;
-            while (sigue) {
-                int control = flujoEntrada.readInt();
-
-                if (control == 0) {
-                    sigue = false; 
-                } else {
-                    List<Integer> primitivaCliente = new ArrayList<>();
-                    for (int i = 0; i < 6; i++) {
-                        primitivaCliente.add(flujoEntrada.readInt());
-                    }
-
-                    String respuesta = servicio.comprobarApuesta(primitivaCliente);
-                    flujoSalida.writeUTF(respuesta);
-                    flujoSalida.flush();
+            while (true) {
+                ServicioServidorPrimitiva.rellenarArrayServidor();
+                ServicioServidorPrimitiva.mostrarArrayServidor();
+                int tamañoArray = flujoEntrada.readInt();
+                int[] numeros = new int[tamañoArray];
+                
+                for (int i = 0; i < tamañoArray; i++) {
+                    numeros[i] = flujoEntrada.readInt();
                 }
-            }    
+                System.out.println("Los numeros del cliente son: ");
+                System.out.println(Arrays.toString(numeros));
 
-            // Cerrar streams
+                int numeroReintegro = flujoEntrada.readInt();
+                System.out.println("El numero de reintegro del cliente es: " + numeroReintegro);
+
+                int numeroComplementario = flujoEntrada.readInt();
+                System.out.println("El numero complementario del cliente es: " + numeroComplementario);
+                String resultado = ServicioServidorPrimitiva.devolucionAlCliente(numeros, numeroComplementario,
+                        numeroReintegro);
+                flujoSalida.writeUTF(resultado);
+                flujoSalida.flush();
+
+                int decision = flujoEntrada.readInt();
+
+                if (decision == 0) {
+                    System.out.println("Cliente desconectado.");
+                    break;
+                }
+            }
+
             flujoEntrada.close();
             flujoSalida.close();
-            // Cerrar cliente
-            cliente.close();
-            // Cerrar ServerSocket
-            serverS.close();
-            System.out.println("Servidor cerrado.");
-            
+            cliente1.close();
+            servidor.close();
+
         } catch (IOException e) {
-            e.printStackTrace();
-        }        
+            System.err.println("Error en el servidor: " + e.getMessage());
+        }
     }
 }
