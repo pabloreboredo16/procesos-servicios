@@ -7,9 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
 
-public class ServidorPrimitiva {
+public class Servidor {
     public static void main(String[] args) {
-
         int puerto = 6000;
 
         try {
@@ -23,11 +22,10 @@ public class ServidorPrimitiva {
             DataOutputStream flujoSalida = new DataOutputStream(cliente1.getOutputStream());
 
             while (true) {
-                ServicioServidorPrimitiva.rellenarArrayServidor();
-                ServicioServidorPrimitiva.mostrarArrayServidor();
+                ServicioServidor.rellenarArrayServidor();
+                ServicioServidor.mostrarArrayServidor();
                 int tamañoArray = flujoEntrada.readInt();
                 int[] numeros = new int[tamañoArray];
-                
                 for (int i = 0; i < tamañoArray; i++) {
                     numeros[i] = flujoEntrada.readInt();
                 }
@@ -36,11 +34,7 @@ public class ServidorPrimitiva {
 
                 int numeroReintegro = flujoEntrada.readInt();
                 System.out.println("El numero de reintegro del cliente es: " + numeroReintegro);
-
-                int numeroComplementario = flujoEntrada.readInt();
-                System.out.println("El numero complementario del cliente es: " + numeroComplementario);
-                String resultado = ServicioServidorPrimitiva.devolucionAlCliente(numeros, numeroComplementario,
-                        numeroReintegro);
+                String resultado = ServicioServidor.devolucionAlCliente(numeros, numeroReintegro);
                 flujoSalida.writeUTF(resultado);
                 flujoSalida.flush();
 
