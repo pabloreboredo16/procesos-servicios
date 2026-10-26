@@ -41,6 +41,8 @@ public class Cliente {
                 System.out.println(reintegro);
                 flujoSalida.writeInt(reintegro);
 
+                flujoSalida.flush();
+
                 String respuesta = flujoEntrada.readUTF();
                 System.out.println("Recibiendo un mensaje del servidor: " + respuesta);
                 
@@ -58,8 +60,6 @@ public class Cliente {
                     System.out.println("Cerrando comunicacion");
                     break;
                 }
-
-                flujoSalida.flush();
             }
 
             flujoEntrada.close();
