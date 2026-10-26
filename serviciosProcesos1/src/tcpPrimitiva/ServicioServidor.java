@@ -10,9 +10,10 @@ public class ServicioServidor {
     private static int reintegroServidor;
 
     public static void rellenarArrayServidor() {
-        boolean esValido = true;
+        boolean esValido;
         int[] arraySinRepeticiones = new int[6];
         do {
+            esValido = true;
             for (int i = 0; i < arrayServidor.length; i++) {
                 arraySinRepeticiones[i] = (int) (Math.random() * 49) + 1;
             }
@@ -21,6 +22,7 @@ public class ServicioServidor {
                 esValido = false;
             }
         } while (!esValido);
+
         for (int i = 0; i < arrayServidor.length; i++) {
             arrayServidor[i] = arraySinRepeticiones[i];
         }
