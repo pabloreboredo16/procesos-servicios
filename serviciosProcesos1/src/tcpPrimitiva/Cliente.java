@@ -18,7 +18,7 @@ public class Cliente {
 
             DataOutputStream flujoSalida = new DataOutputStream(cliente.getOutputStream());
             DataInputStream flujoEntrada = new DataInputStream(cliente.getInputStream());
-            System.out.println("Conectado al servidor de Números Perfectos.");
+            System.out.println("Conectado al servidor de La Primitiva.");
 
             while (true) {
                 int[] numerosCliente = new int[6];
