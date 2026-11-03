@@ -11,7 +11,7 @@ public class Cliente {
     public static void main(String[] args) {
         String host = "localhost";
         int puerto = 6000;
-
+ 
         try {
             Socket cliente = new Socket(host, puerto);
             Scanner sc = new Scanner(System.in);

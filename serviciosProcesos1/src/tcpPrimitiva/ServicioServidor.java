@@ -11,10 +11,10 @@ public class ServicioServidor {
 
     public static void rellenarArrayServidor() {
         boolean esValido;
-        int[] arraySinRepeticiones = new int[6];
+        int[] arraySinRepeticiones = new int[7];
         do {
             esValido = true;
-            for (int i = 0; i < arrayServidor.length; i++) {
+            for (int i = 0; i < arraySinRepeticiones.length; i++) {
                 arraySinRepeticiones[i] = (int) (Math.random() * 49) + 1;
             }
             if (ServicioServidor.hayRepetidos(arraySinRepeticiones)) {
@@ -23,12 +23,13 @@ public class ServicioServidor {
             }
         } while (!esValido);
 
+        complementarioServidor = arraySinRepeticiones[6];
+
         for (int i = 0; i < arrayServidor.length; i++) {
             arrayServidor[i] = arraySinRepeticiones[i];
         }
         Arrays.sort(arrayServidor);
 
-        complementarioServidor = (int) (Math.random() * 49) + 1;
         reintegroServidor = (int) (Math.random() * 10);
     }
 
