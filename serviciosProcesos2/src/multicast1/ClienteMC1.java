@@ -5,9 +5,9 @@ import java.net.*;
 public class ClienteMC1 {
     public static void main(String args[]) throws Exception {
         // Se crea el socket multicast
-        int Puerto = 12345; // Puerto multicast
-        MulticastSocket ms = new MulticastSocket(Puerto);
-        InetAddress grupo = InetAddress.getByName("225.0.0.1"); // Grupo
+        int puerto = 12345; // Puerto multicast
+        MulticastSocket ms = new MulticastSocket(puerto);
+        InetAddress grupo = InetAddress.getByName("230.0.0.1"); // Grupo
 
         // Nos unimos al grupo
         ms.joinGroup(grupo);

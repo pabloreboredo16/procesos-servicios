@@ -11,7 +11,7 @@ public class ServidorMC1 {
         // Se crea el socket multicast.
         MulticastSocket ms = new MulticastSocket();
         int Puerto = 12345; // Puerto multicast
-        InetAddress grupo = InetAddress.getByName("225.0.0.1"); // Grupo
+        InetAddress grupo = InetAddress.getByName("230.0.0.1"); // Grupo
         String cadena = "";
 
         while (!cadena.trim().equals("*")) {
