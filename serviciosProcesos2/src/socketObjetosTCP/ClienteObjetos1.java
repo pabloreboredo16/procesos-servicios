@@ -8,7 +8,7 @@ public class ClienteObjetos1 {
 
         String Host = "localhost";
         int Puerto = 6000; // puerto remoto
-        System.out.println("PROGRAMA CLIENTE INICIADO...");
+        System.out.println("Listo para enviar al servidor...");
 
         try (Socket cliente = new Socket(Host, Puerto);
              
