@@ -13,19 +13,22 @@ public class ServidorObjetos1 {
 
             try (Socket cliente = servidor.accept();
 
-                // Se prepara un flujo de salida para objetos con ObjectOutputStream
-                ObjectOutputStream outObjeto = new ObjectOutputStream(cliente.getOutputStream());
                 // Se prepara un flujo de entrada para objetos con ObjectInputStream
-                ObjectInputStream inObjeto = new ObjectInputStream(cliente.getInputStream())) {
-
-                // Se envia un objeto
-                Persona per = new Persona("Juan", 20);
-                outObjeto.writeObject(per);
-                System.out.println("Envio: " + per.getNombre() + "*" + per.getEdad());
+                ObjectInputStream inObjeto = new ObjectInputStream(cliente.getInputStream());
+                // Se prepara un flujo de salida para objetos con ObjectOutputStream
+                ObjectOutputStream outObjeto = new ObjectOutputStream(cliente.getOutputStream())) {
 
                 // Se recibe un objeto
                 Persona dato = (Persona) inObjeto.readObject();
                 System.out.println("Recibo: " + dato.getNombre() + "*" + dato.getEdad());
+
+                // Modifico el objeto
+                dato.setNombre("Juan Ramos");
+                dato.setEdad(22);
+
+                // Se envía el objeto modificado
+                outObjeto.writeObject(dato);
+                System.out.println("Envio: " + dato.getNombre() + "*" + dato.getEdad());
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
