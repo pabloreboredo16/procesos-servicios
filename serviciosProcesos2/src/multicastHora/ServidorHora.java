@@ -1,4 +1,4 @@
-package multicast1;
+package multicastHora;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;

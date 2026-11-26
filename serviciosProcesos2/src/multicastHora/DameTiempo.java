@@ -1,4 +1,4 @@
-package multicast1;
+package multicastHora;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
