@@ -2,8 +2,10 @@ package socketObjetosTCP;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 public class ServidorObjetos2 {
+    @SuppressWarnings("unchecked")
     public static void main(String[] arg) {
 
         int numeroPuerto = 6000; // Puerto
@@ -18,17 +20,25 @@ public class ServidorObjetos2 {
                 // Se prepara un flujo de salida para objetos con ObjectOutputStream
                 ObjectOutputStream outObjeto = new ObjectOutputStream(cliente.getOutputStream())) {
 
-                // Se recibe un objeto
-                Persona dato = (Persona) inObjeto.readObject();
-                System.out.println("Recibo: " + dato.getNombre() + "-" + dato.getEdad());
+                // Se recibe la lista de objetos
+                ArrayList<Persona> listaDatos = (ArrayList<Persona>) inObjeto.readObject();
+                System.out.println("Recibo lista de personas:");
+                for (Persona p : listaDatos) {
+                    System.out.println("  " + p.getNombre() + "-" + p.getEdad());
+                }
 
-                // Modifico el objeto
-                dato.setNombre(convertirMayus(dato.getNombre()));
-                dato.setEdad(dato.getEdad() + 10);
+                // Modifico cada objeto de la lista
+                for (Persona p : listaDatos) {
+                    p.setNombre(convertirMayus(p.getNombre()));
+                    p.setEdad(p.getEdad() + 10);
+                }
 
-                // Se envía el objeto modificado
-                outObjeto.writeObject(dato);
-                System.out.println("Envio: " + dato.getNombre() + "-" + dato.getEdad());
+                // Se envía la lista de objetos modificada
+                outObjeto.writeObject(listaDatos);
+                System.out.println("Envio lista modificada:");
+                for (Persona p : listaDatos) {
+                    System.out.println("  " + p.getNombre() + "-" + p.getEdad());
+                }
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
